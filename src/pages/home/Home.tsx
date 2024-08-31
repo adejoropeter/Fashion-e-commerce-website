@@ -7,17 +7,21 @@ import { Button } from "../../components/ui/button";
 import CartItem from "../../components/CartItem";
 import { useGetAllProductQuery } from "../../redux/slices/productApiSlice";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Skeleton from "../../components/Skeleton";
+import { onClickOnAnItem } from "../../redux/slices/cartSlice";
 
 const Home = () => {
   const isDesktop = useMediaQuery("(min-width:758px)");
   const { data: products, error, isLoading } = useGetAllProductQuery();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   if (error) return <p>Error loading products.</p>;
+  if (isLoading) return <p> loading...</p>;
   return (
     <main className="flex flex-col  ">
-      {!isLoading ? (
+      {/* {!isLoading ? (
         <div className="w-full sm:h-[60%] px-4 py-4 grid grid-cols-3 gap-4">
           {products!
             .filter((_, idx) => idx <= 2)
@@ -27,12 +31,24 @@ const Home = () => {
         </div>
       ) : (
         <Skeleton />
-      )}
+      )} */}
+
+      <div className="w-full sm:h-[60%] px-4 py-4 grid grid-cols-3 gap-4">
+        {products!
+          .filter((_, idx) => idx <= 2)
+          .map((product, index) => (
+            <CartItem product={product} key={index} index={index} />
+          ))}
+      </div>
 
       <div className="relative overflow-hidden  w-screen h-[200px]  text-white">
         <div className="absolute  gap-4 w-full h-full flex whitespace-nowrap animate-marquee">
           {products?.map((product, index) => (
             <div
+              onClick={() => {
+                navigate(`/product/${product.name}`);
+                dispatch(onClickOnAnItem({ ...product }));
+              }}
               key={index}
               className={`relative overflow-hidden h-full bg-white border w-[400px] hover:[&>.first]:scale-105 hover:border-[#2563EB] rounded-xl cursor-pointer 
              `}>

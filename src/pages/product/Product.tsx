@@ -19,8 +19,8 @@ import { ProductSizeType } from "../../types/cartItemsType";
 const Product = () => {
   const eachItem = useSelector((state: RootState) => state.product.eachItem);
   const dispatch = useDispatch();
-  const handleNext = (id: string) => {
-    dispatch(onNextProductColor({ subId: id }));
+  const handleNext = () => {
+    dispatch(onNextProductColor());
   };
   const handlePrev = () => {
     dispatch(onPrevProductColor());
@@ -73,7 +73,7 @@ const Product = () => {
               />
               <div className="h-full  border border-[#525151] text-black"></div>
               <MoveRight
-                onClick={() => handleNext(eachItem?.id!)}
+                onClick={() => handleNext()}
                 className="text-[#525151] hover:scale-x-125  hover:text-black transition-all"
               />
             </div>
@@ -111,15 +111,14 @@ const Product = () => {
             $20.00 USD
           </div>
         </div>
-        <Separator className="border-gray-300 my-4" />
 
         <div className="flex flex-col gap-3">
           {eachItem?.productColor && (
             <h2 className="text-black font-semibold">COLOR</h2>
           )}
-          <div className="flex flex-wrap gap-2">
-            {eachItem?.productColor?.map((col) => {
-              return (
+            <div className="flex flex-wrap gap-2">
+          {eachItem?.productColor?.map((col) => {
+            return (
                 <button
                   key={col.id}
                   onClick={() => {
@@ -132,8 +131,8 @@ const Product = () => {
                   } bg-[#B0B0B0] text-sm  flex justify-center items-center font-semibold  hover:border-[#2562E9]  rounded-full px-2 py-1 outline-none`}>
                   {col?.color}
                 </button>
-              );
-            })}
+            );
+          })}
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -156,16 +155,16 @@ const Product = () => {
                     );
                   }}
                   className={`${
-                    size.isSelected ? "border-2 border-[#2562E9]" : ""
-                  } bg-[#B0B0B0] hover:ring-3 text-sm font-semibold  hover:border-[#2562E9]  border-[0.1rem] rounded-full px-5 py-2 transition-all`}>
+                    size.isSelected ? "border-[2px] border-[#2562E9]" : ""
+                  } bg-[#B0B0B0] hover:ring-3 text-sm font-semibold  hover:border-[#2562E9]  border-[0.1rem] rounded-full px-4 py-1 transition-all`}>
                   {size.size}
                 </button>
               );
             })}
           </div>
         </div>
-        <div>
-          <p className="te">
+        <div className="flex flex-col gap-2">
+          <p className="text-black">
             60% combed ringspun cotton/40% polyester jersey tee.
           </p>
           <button

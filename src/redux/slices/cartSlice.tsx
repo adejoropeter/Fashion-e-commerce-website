@@ -47,7 +47,7 @@ const cartSlice = createSlice({
       // }
     },
 
-    onNextProductColor: (state, action: PayloadAction<{ subId: string }>) => {
+    onNextProductColor: (state) => {
       if (state.eachItem) {
         const currentIndex = state.eachItem.trackingNum;
         const maxIndex = state.eachItem.subCartItem.length;
