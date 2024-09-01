@@ -1,8 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { items } from "../../data";
 import { CartItemType } from "../../types/cartItemsType";
 import { producApiSlice } from "./productApiSlice";
-import { loadEachItemFromLocalStorage } from "../../utils/localstorage";
 type initialStateType = {
   product: CartItemType[];
   eachItem: CartItemType | null;
@@ -29,10 +27,7 @@ const cartSlice = createSlice({
       state: initialStateType,
       action: PayloadAction<CartItemType>
     ) => {
-      const selectedItem = state.product.find(
-        (item) => item.id === action.payload.id
-      );
-
+      
       state.eachItem = action.payload;
       // if (selectedItem) {
       //   state.eachItem = {
@@ -47,7 +42,7 @@ const cartSlice = createSlice({
       // }
     },
 
-    onNextProductColor: (state, action: PayloadAction<{ subId: string }>) => {
+    onNextProductColor: (state) => {
       if (state.eachItem) {
         const currentIndex = state.eachItem.trackingNum;
         const maxIndex = state.eachItem.subCartItem.length;
@@ -158,8 +153,7 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<{ id: string; proColId: number }>
     ) => {
-      const { id, proColId } = action.payload;
-      const selectedProduct = state.product.find((a) => a.id === id);
+      const {  proColId } = action.payload;
       if (state.eachItem && state.eachItem.productSize) {
         state.eachItem = {
           ...state.eachItem,

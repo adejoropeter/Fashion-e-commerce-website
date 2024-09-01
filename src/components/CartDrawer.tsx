@@ -10,6 +10,7 @@ import { DrawerContent, DrawerTrigger } from "./ui/drawer";
 import { Drawer } from "../components/ui/drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { CartItemType, ProductSizeType } from "../types/cartItemsType";
 
 const CartDrawer = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const CartDrawer = () => {
                 </div>
               </div>
               <div className="h-[300px]   w-full flex-grow flex-col gap-2 overflow-y-scroll">
-                {cartItems.map((cart) => {
+                {cartItems.map((cart:CartItemType) => {
                   return (
                     <div className="flex w-full justify-between">
                       <div className="w-[80px] h-fit border relative rounded-[10px]">
@@ -65,7 +66,7 @@ const CartDrawer = () => {
                                   (a: { isSelected: boolean }) => a.isSelected
                                 )?.color
                               } / ${
-                                cart.productSize?.find((a) => a.isSelected)
+                                cart.productSize?.find((a:ProductSizeType) => a.isSelected)
                                   ?.size
                               }`
                             : ""

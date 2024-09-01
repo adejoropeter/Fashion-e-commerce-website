@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Separator } from "@radix-ui/react-select";
-import { Button } from "../../components/ui/button";
 import { MoveLeft, MoveRight, Plus } from "lucide-react";
 import {
   addItemToCart,
@@ -12,22 +11,21 @@ import {
   onNextProductColor,
   onPrevProductColor,
 } from "../../redux/slices/cartSlice";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 import { toggleDrawer } from "../../redux/slices/cartDrawerSlice";
-import { ProductSizeType } from "../../types/cartItemsType";
+import { ProductColorType, ProductSizeType, SubCartItem } from "../../types/cartItemsType";
 
 const Product = () => {
   const eachItem = useSelector((state: RootState) => state.product.eachItem);
   const dispatch = useDispatch();
-  const handleNext = (id: string) => {
-    dispatch(onNextProductColor({ subId: id }));
+  const handleNext = () => {
+    dispatch(onNextProductColor());
   };
   const handlePrev = () => {
     dispatch(onPrevProductColor());
   };
   const [searchParams, setSearchParams] = useSearchParams();
   const cart = useSelector((state: RootState) => state.product.cartItems);
-  const allItems = useSelector((state: RootState) => state.product.product);
   const updatedParams = new URLSearchParams(searchParams.toString());
 
   const handleAddToCart = () => {
@@ -36,15 +34,15 @@ const Product = () => {
     console.log(cart);
   };
   const disAbleFunc = () => {
-    const isSizeSelected = eachItem?.productSize?.every((a) => !a.isSelected);
-    const isColorSelected = eachItem?.subCartItem.every((a) => a.isSelected);
+    const isSizeSelected = eachItem?.productSize?.every((a:ProductSizeType) => !a.isSelected);
+    const isColorSelected = eachItem?.subCartItem.every((a:SubCartItem) => a.isSelected);
     if (isSizeSelected && !isColorSelected) {
       return true;
     } else {
       return false;
     }
   };
-  const selectedItem = eachItem?.subCartItem.find((a) => a.isSelected);
+  const selectedItem = eachItem?.subCartItem.find((a:SubCartItem) => a.isSelected);
 
   useEffect(() => {
     if (eachItem) {
@@ -73,12 +71,12 @@ const Product = () => {
               />
               <div className="h-full  border border-[#525151] text-black"></div>
               <MoveRight
-                onClick={() => handleNext(eachItem?.id!)}
+                onClick={() => handleNext( )}
                 className="text-[#525151] hover:scale-x-125  hover:text-black transition-all"
               />
             </div>
             <div className="w-full h-[30%]  p-4 gap-3 overflow-auto  flex justify-center">
-              {eachItem?.subCartItem.map((sub) => {
+              {eachItem?.subCartItem.map((sub:SubCartItem) => {
                 return (
                   <div
                     onClick={() => {
@@ -118,7 +116,7 @@ const Product = () => {
             <h2 className="text-black font-semibold">COLOR</h2>
           )}
           <div className="flex flex-wrap gap-2">
-            {eachItem?.productColor?.map((col) => {
+            {eachItem?.productColor?.map((col:ProductColorType) => {
               return (
                 <button
                   key={col.id}
@@ -141,7 +139,7 @@ const Product = () => {
             <h2 className="text-black font-semibold">SIZE</h2>
           )}
           <div className="flex flex-wrap gap-2">
-            {eachItem?.productSize?.map((size, idx) => {
+            {eachItem?.productSize?.map((size:ProductSizeType, idx:number) => {
               return (
                 <button
                   key={idx}

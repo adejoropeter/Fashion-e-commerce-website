@@ -1,6 +1,6 @@
 import { CartItemType } from "../../types/cartItemsType";
 import { apiSlice } from "./apiSlice";
-const PROD_URL = "http://localhost:3023";
+const PROD_URL = "http://localhost:3000";
 
 export const producApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

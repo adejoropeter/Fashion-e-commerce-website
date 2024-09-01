@@ -1,20 +1,12 @@
-import useMediaQuery from "../../hooks/useMediaQuery";
-import { Drawer, DrawerTrigger } from "../../components/ui/drawer";
-import { MenuIcon, ShoppingCart } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { Button } from "../../components/ui/button";
 import CartItem from "../../components/CartItem";
 import { useGetAllProductQuery } from "../../redux/slices/productApiSlice";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Skeleton from "../../components/Skeleton";
 
 const Home = () => {
-  const isDesktop = useMediaQuery("(min-width:758px)");
   const { data: products, error, isLoading } = useGetAllProductQuery();
-
-  if (error) return <p>Error loading products.</p>;
+console.log(products)
+  if (error) return <p className="text-red-500">Error loading products.</p>;
   return (
     <main className="flex flex-col  ">
       {!isLoading ? (

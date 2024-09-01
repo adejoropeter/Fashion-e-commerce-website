@@ -1,46 +1,18 @@
-import React, { useEffect } from "react";
 import {
   Drawer,
   DrawerContent,
-  DrawerOverlay,
   DrawerTrigger,
 } from "./ui/drawer";
-import { MenuIcon, Minus, Plus, Search, ShoppingCart, X } from "lucide-react";
+import { MenuIcon, Search,  } from "lucide-react";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { Link } from "react-router-dom";
-import { Form } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { closeDrawer, toggleDrawer } from "../redux/slices/cartDrawerSlice";
-import { Separator } from "../components/ui/separator";
-import { DialogTitle } from "./ui/dialog";
-import {
-  decrementCartItemQuantity,
-  incrementCartItemQuantity,
-  removeItemFromCart,
-  selectCartTotal,
-} from "../redux/slices/cartSlice";
 import CartDrawer from "./CartDrawer";
 
 const Header = () => {
   const isDesktop = useMediaQuery("(min-width:758px)");
-  const isOpen = useSelector((state: RootState) => state.drawer.isOpen);
-  const eachItem = useSelector((state: RootState) => state.product.eachItem);
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.product.cartItems);
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent any other clicks from interfering
-    dispatch(closeDrawer());
-  };
-  const handleDecrementOfQuantity = (id: string) => {
-    dispatch(decrementCartItemQuantity({ cartItemId: id }));
-  };
 
-  const cartTotal = useSelector((state: RootState) =>
-    selectCartTotal(state.product)
-  );
 
   return (
     <header className="bg- px-4 py-4 w-full h-[10%]  flex items-center justify-between">
