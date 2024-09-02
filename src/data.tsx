@@ -25,7 +25,7 @@ export const items = [
         id: 1,
         uri: "/assets/t-shirt-1.avif",
         color: "Black",
-        isSelected: true,
+        isSelected: false,
       },
       {
         id: 2,
@@ -55,7 +55,7 @@ export const items = [
         id: 1,
         uri: "/assets/mug-1.avif",
 
-        isSelected: true,
+        isSelected: false,
       },
       {
         id: 2,

@@ -13,6 +13,7 @@ const persistedReducer = persistReducer(persistConfig, cartSlice);
 export const store = configureStore({
   reducer: {
     product: persistedReducer,
+    // product:cartSlice,
     drawer: cartDrawerSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },

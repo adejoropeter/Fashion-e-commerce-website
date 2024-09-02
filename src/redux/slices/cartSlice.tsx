@@ -1,6 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItemType } from "../../types/cartItemsType";
 import { producApiSlice } from "./productApiSlice";
+import { items } from "../../data";
 type initialStateType = {
   product: CartItemType[];
   eachItem: CartItemType | null;
@@ -8,7 +9,7 @@ type initialStateType = {
   // productTrackingNumber: number;
 };
 const initialState: initialStateType = {
-  product: [],
+  product: items,
   eachItem: null,
   cartItems: [],
 };
@@ -27,19 +28,22 @@ const cartSlice = createSlice({
       state: initialStateType,
       action: PayloadAction<CartItemType>
     ) => {
-      
-      state.eachItem = action.payload;
-      // if (selectedItem) {
-      //   state.eachItem = {
-      //     ...selectedItem,
-      //     productColor: selectedItem.productColor?.map((a) => {
-      //       return {
-      //         ...a,
-      //         isSelected: a.id === selectedItem.trackingNum,
-      //       };
-      //     }),
-      //   };
-      // }
+      const selectedItem = state.product.find(
+        (a) => a.id === action.payload.id
+      );
+      if (selectedItem) {
+        state.eachItem = {
+          ...selectedItem,
+          subCartItem: selectedItem.subCartItem.map((a) => ({
+            ...a,
+            isSelected: a.id === selectedItem.trackingNum,
+          })),
+          productColor: selectedItem.productColor?.map((a) => ({
+            ...a,
+            isSelected: a.id === selectedItem.trackingNum,
+          })),
+        };
+      }
     },
 
     onNextProductColor: (state) => {
@@ -153,7 +157,7 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<{ id: string; proColId: number }>
     ) => {
-      const {  proColId } = action.payload;
+      const { proColId } = action.payload;
       if (state.eachItem && state.eachItem.productSize) {
         state.eachItem = {
           ...state.eachItem,

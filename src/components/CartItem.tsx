@@ -15,6 +15,7 @@ const CartItem = ({
   const handleClick = () => {
     navigate(`/product/${product.name}`);
     dispatch(onClickOnAnItem(product));
+    console.log(product);
   };
 
   return (
